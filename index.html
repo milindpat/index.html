@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milind Patel — IT Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --accent: #ff6a00;
+    --accent2: #ff9a3c;
+    --accent3: #ffb347;
+    --accent4: #e65c00;
+    --text: #000000;
+    --muted: #1a1a1a;
+    --card: #1a1a1a;
+    --border: rgba(255,106,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── ANIMATED GRADIENT BG ── */
+  .bg-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(135deg, #1a0a00 0%, #0d0d0d 25%, #1a0500 50%, #0d0d0d 75%, #1a0a00 100%);
+    background-size: 400% 400%;
+    animation: gradShift 12s ease infinite;
+  }
+
+  @keyframes gradShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Floating color orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb1 { width: 500px; height: 500px; background: #ff6a00; top: -150px; left: -100px; animation: orbFloat1 14s ease-in-out infinite alternate; }
+  .orb2 { width: 400px; height: 400px; background: #e65c00; top: 30%; right: -120px; animation: orbFloat2 11s ease-in-out infinite alternate; }
+  .orb3 { width: 350px; height: 350px; background: #ff9a3c; bottom: 5%; left: 20%; animation: orbFloat1 16s ease-in-out infinite alternate-reverse; }
+  .orb4 { width: 300px; height: 300px; background: #ffb347; bottom: 20%; right: 10%; animation: orbFloat2 9s ease-in-out infinite alternate; }
+
+  @keyframes orbFloat1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(60px, 80px) scale(1.1); }
+  }
+  @keyframes orbFloat2 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-50px, 60px) scale(0.95); }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(13,13,13,0.90);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,106,0,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+  .nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    padding: 0.35em 1em;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+    box-shadow: 0 4px 20px rgba(255,77,109,0.35);
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero-name span {
+    display: block;
+    background: linear-gradient(120deg, var(--accent), var(--accent2), var(--accent3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    color: #ffffff;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-contact {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .contact-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #ffffff;
+    background: rgba(255,106,0,0.12);
+    border: 1px solid rgba(255,106,0,0.25);
+    padding: 0.45em 1em;
+    border-radius: 100px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .contact-chip:hover { box-shadow: 0 4px 16px rgba(255,106,0,0.35); transform: translateY(-2px); }
+  .contact-chip svg { width: 13px; height: 13px; color: var(--accent); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION WRAPPERS ── */
+  .section-wrap {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 0;
+  }
+
+  /* Alternating section colors */
+  .section-wrap:nth-child(odd)  .section-bg { background: rgba(255,255,255,0.55); }
+  .section-wrap:nth-child(even) .section-bg { background: rgba(255,240,255,0.45); }
+
+  .section-bg {
+    backdrop-filter: blur(4px);
+  }
+
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  .lbl-pink   { color: #ff6a00; }
+  .lbl-purple { color: #ff9a3c; }
+  .lbl-teal   { color: #ffb347; }
+  .lbl-orange { color: #e65c00; }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #ffffff;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    position: relative;
+    z-index: 1;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent4));
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 4px;
+    opacity: 0.35;
+  }
+
+  /* ── SUMMARY ── */
+  .summary-box {
+    background: #1a1a1a;
+    border: 1px solid rgba(255,106,0,0.2);
+    border-left: 5px solid var(--accent);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .summary-box p {
+    font-size: 1rem;
+    color: #ffffff;
+    line-height: 1.9;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: #1a1a1a;
+    border: 1px solid rgba(255,106,0,0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(255,106,0,0.2); }
+
+  .skill-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .sk1 { color: #ff6a00; }
+  .sk2 { color: #ff9a3c; }
+  .sk3 { color: #ffb347; }
+  .sk4 { color: #e65c00; }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tag {
+    font-size: 0.72rem;
+    color: #ffffff;
+    background: rgba(255,106,0,0.08);
+    border: 1px solid rgba(255,106,0,0.2);
+    padding: 0.2em 0.75em;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .edu-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1.6rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    border-left: 5px solid var(--accent);
+    transition: transform 0.2s;
+  }
+  .edu-card:hover { transform: translateX(6px); }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    color: #ffffff;
+  }
+
+  .edu-school { font-size: 0.82rem; color: #ffffff; margin-bottom: 0.4rem; }
+
+  .edu-courses { font-size: 0.72rem; color: #ffffff; grid-column: 1/-1; }
+
+  .edu-date { font-size: 0.72rem; color: var(--accent); letter-spacing: 0.08em; white-space: nowrap; text-align: right; font-weight: 500; }
+  .edu-gpa  { font-size: 0.72rem; color: var(--accent2); text-align: right; font-weight: 500; }
+
+  /* ── PROJECTS ── */
+  .project-card {
+    background: linear-gradient(135deg, #1a1a1a 60%, #200e00 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,106,0,0.2);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    cursor: pointer;
+  }
+  .project-card:hover {
+    transform: translateY(-18px) scale(1.02);
+    box-shadow: 0 32px 64px rgba(255,106,0,0.35), 0 0 40px rgba(255,106,0,0.15);
+    border-color: rgba(255,106,0,0.7);
+  }
+
+  .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .project-date { font-size: 0.7rem; color: #ffffff; white-space: nowrap; }
+
+  .project-desc { font-size: 0.82rem; color: #ffffff; line-height: 1.8; margin-bottom: 1.2rem; }
+
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tech-tag {
+    font-size: 0.7rem;
+    color: #000000;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    padding: 0.2em 0.75em;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(255,106,0,0.3);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .exp-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 1.8rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    border-top: 4px solid var(--accent);
+    transition: transform 0.2s;
+  }
+
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+
+  .exp-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #ffffff; }
+
+  .exp-company { font-size: 0.8rem; color: var(--accent); margin-top: 0.15rem; font-weight: 500; }
+
+  .exp-date { font-size: 0.7rem; color: #ffffff; text-align: right; white-space: nowrap; }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .exp-bullets li { font-size: 0.82rem; color: #ffffff; padding-left: 1.4em; position: relative; }
+
+  .exp-bullets li::before { content: '◆'; position: absolute; left: 0; font-size: 0.45em; top: 0.35em; color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, #e65c00, #ff6a00, #ff9a3c);
+    padding: 2rem 4rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: #000000;
+    letter-spacing: 0.06em;
+  }
+  footer strong { color: #fff; font-weight: 600; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section { padding: 5rem 1.5rem 3rem; }
+    .edu-card { grid-template-columns: 1fr; }
+    .edu-date, .edu-gpa { text-align: left; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BG ELEMENTS -->
+<div class="bg-canvas"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div class="orb orb4"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MP.</div>
+  <ul class="nav-links">
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">IT Portfolio · Cloud Computing</div>
+    <h1 class="hero-name">Milind<span>Patel</span></h1>
+    <p class="hero-subtitle">I am dedicated to my work and an Information Systems and Sciences student with a focus in Cloud Computing. Experience working on a team, collaborating to ensure smooth operation and high customer satisfaction. Confident using Java script for coding website.</p>
+    <div class="hero-contact">
+      <div class="contact-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.1a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (484)-672-1349
+      </div>
+      <div class="contact-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a6d6c7d2c3cacb979793e6d5d2d3c2c3c8d288d1d6d3c8cc88c3c2d3">[email&#160;protected]</a>
+      </div>
+      <div class="contact-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Orange, NJ 07050
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SUMMARY -->
+<section id="summary">
+  <div class="section-label lbl-pink">About Me</div>
+  <h2 class="section-title">Summary</h2>
+  <div class="summary-box reveal">
+    <p>I am dedicated to my work and an Information Systems and Sciences student with a focus in Cloud Computing. Experience working on a team, collaborating to ensure smooth operation and high customer satisfaction. Confident using Java script for coding website.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label lbl-pink">Technical Profile</div>
+  <h2 class="section-title">Skills &amp; Tools</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-title sk1">Programming Languages</div>
+      <div class="skill-tags">
+        <span class="tag">C++</span>
+        <span class="tag">C</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">HTML</span>
+        <span class="tag">Java</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-title sk2">Operating Systems</div>
+      <div class="skill-tags">
+        <span class="tag">Windows</span>
+        <span class="tag">Linux (Ubuntu)</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-title sk3">Applications / Software</div>
+      <div class="skill-tags">
+        <span class="tag">Microsoft Office Word</span>
+        <span class="tag">Excel</span>
+        <span class="tag">PowerPoint</span>
+        <span class="tag">Outlook</span>
+        <span class="tag">Zoom</span>
+        <span class="tag">Visual Studio</span>
+        <span class="tag">Google Sheets</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label lbl-purple">Academic Background</div>
+  <h2 class="section-title">Education</h2>
+  <div class="edu-list">
+
+    <div class="edu-card reveal">
+      <div>
+        <div class="edu-degree">Bachelor of Science in Information Technology</div>
+        <div class="edu-school">William Paterson University, Wayne, NJ</div>
+      </div>
+      <div>
+        <div class="edu-date">December 2026</div>
+      </div>
+      <div class="edu-courses">Relevant Coursework: Computer and Information Technology, System Administration, Computer Networks II, Penetration Testing and Ethical Hacking</div>
+    </div>
+
+    <div class="edu-card reveal">
+      <div>
+        <div class="edu-degree">Associate of Arts in Information Systems and Sciences</div>
+        <div class="edu-school">Montgomery College, Rockville, MD</div>
+      </div>
+      <div>
+        <div class="edu-date">May 2025</div>
+        <div class="edu-gpa">GPA: 3.63/4</div>
+      </div>
+      <div class="edu-courses">Relevant Coursework: Computer Concepts, System Analysis & Design, Computer Science 1</div>
+    </div>
+
+    <div class="edu-card reveal">
+      <div>
+        <div class="edu-degree">Diploma – Computer Engineering</div>
+        <div class="edu-school">Ganpat University, Mehsana, India</div>
+      </div>
+      <div>
+        <div class="edu-date">July 2022</div>
+        <div class="edu-gpa">GPA: 8.5/10 (3.4/4.0)</div>
+      </div>
+      <div class="edu-courses">Relevant Coursework: Web Technology, Data Structure, Operating System, Network Security, Cloud Computing</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label lbl-teal">Work Samples</div>
+  <h2 class="section-title">Projects</h2>
+  <div class="project-card reveal">
+    <div class="project-header">
+      <div class="project-name">Amazon Shopping Webpage</div>
+      <div class="project-date">July 2021 – December 2021</div>
+    </div>
+    <p class="project-desc">Ganpat University, Mehasana, India</p>
+    <p class="project-desc">Built a website for class assignments in a group project using Visual Studio, Java Script, Node JS and HTML</p>
+    <ul class="exp-bullets" style="margin-bottom:1.2rem;">
+      <li>Created the outline and presented this to the professor for approval</li>
+      <li>Received and acted on feedback, modifying proposal and getting it approved</li>
+      <li>Supported team in writing code, troubleshooting creation of website features</li>
+    </ul>
+    <div class="project-tech">
+      <span class="tech-tag">Visual Studio</span>
+      <span class="tech-tag">JavaScript</span>
+      <span class="tech-tag">Node JS</span>
+      <span class="tech-tag">HTML</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label lbl-orange">Work History</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-list">
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-title">General Crew</div>
+          <div class="exp-company">Cheese and Chips, Ahmedabad, India</div>
+        </div>
+        <div class="exp-date">January 2023 – July 2023</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Greeted and served customers in person and on the phone in a kind professional manner</li>
+        <li>Prepare food and drinks and serve customers</li>
+        <li>Worked well in a fast-paced environment managing multiple priorities and ensuring smooth operation</li>
+        <li>Processed customer payments including cash, credit, and google pay</li>
+        <li>Managed and maintained stock of food and other key items, reporting to management weekly</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-title">General Crew</div>
+          <div class="exp-company">Cheese and Chips, Ahmedabad, India</div>
+        </div>
+        <div class="exp-date">May 2019 – July 2020</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Greeted and served customers in person and on the phone in a kind professional manner</li>
+        <li>Prepare food and drinks and serve customers</li>
+        <li>Worked well in a fast-paced environment managing multiple priorities and ensuring smooth operation</li>
+        <li>Processed customer payments including cash, credit, and google pay</li>
+        <li>Managed and maintained stock of food and other key items, reporting to management weekly</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Designed &amp; developed for <strong>Milind Patel</strong> · 2024
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
